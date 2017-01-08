@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by junior on 7/01/17.
@@ -58,17 +56,16 @@ public class Sudoku {
 
         //showSudoku();
 
-        for(int itera=0;itera<20;itera++){
+        for (int itera = 0; itera < 20; itera++) {
             initDefaultValues();
             cleanSudoku();
             showSudoku();
             reInit();
         }
 
-        //recorreRows();
+        recorreRows();
 
     }
-
 
 
     private void showSudoku() {
@@ -130,52 +127,53 @@ public class Sudoku {
 
                     //remover de los sets
 
-                    Point p = new Point(row,column);
+                    Point p = new Point(row, column);
 
                     HashSet<Integer> elementosSet = new HashSet<Integer>();
-                    if(set1.contains(p)){
-                        for(Point point:set1){
-                            if(sudoku[point.getX()][point.getY()] instanceof  Integer)
+                    if (set1.contains(p)) {
+                        for (Point point : set1) {
+                            if (sudoku[point.getX()][point.getY()] instanceof Integer)
                                 elementosSet.add((Integer) sudoku[point.getX()][point.getY()]);
                         }
-                    }else if(set2.contains(p)){
-                        for(Point point:set2){
-                            if(sudoku[point.getX()][point.getY()] instanceof  Integer)
+                    } else if (set2.contains(p)) {
+                        for (Point point : set2) {
+                            if (sudoku[point.getX()][point.getY()] instanceof Integer)
                                 elementosSet.add((Integer) sudoku[point.getX()][point.getY()]);
                         }
-                    }else if(set3.contains(p)){
-                        for(Point point:set3){
-                            if(sudoku[point.getX()][point.getY()] instanceof  Integer)
+                    } else if (set3.contains(p)) {
+                        for (Point point : set3) {
+                            if (sudoku[point.getX()][point.getY()] instanceof Integer)
                                 elementosSet.add((Integer) sudoku[point.getX()][point.getY()]);
                         }
-                    }else if(set4.contains(p)){
-                        for(Point point:set4){
-                            if(sudoku[point.getX()][point.getY()] instanceof  Integer)
+                    } else if (set4.contains(p)) {
+                        for (Point point : set4) {
+                            if (sudoku[point.getX()][point.getY()] instanceof Integer)
                                 elementosSet.add((Integer) sudoku[point.getX()][point.getY()]);
                         }
-                    }else if(set5.contains(p)){
-                        for(Point point:set5){
-                            if(sudoku[point.getX()][point.getY()] instanceof  Integer){
-                                elementosSet.add((Integer) sudoku[point.getX()][point.getY()]);}
+                    } else if (set5.contains(p)) {
+                        for (Point point : set5) {
+                            if (sudoku[point.getX()][point.getY()] instanceof Integer) {
+                                elementosSet.add((Integer) sudoku[point.getX()][point.getY()]);
+                            }
                         }
-                    }else if(set6.contains(p)){
-                        for(Point point:set6){
-                            if(sudoku[point.getX()][point.getY()] instanceof  Integer)
+                    } else if (set6.contains(p)) {
+                        for (Point point : set6) {
+                            if (sudoku[point.getX()][point.getY()] instanceof Integer)
                                 elementosSet.add((Integer) sudoku[point.getX()][point.getY()]);
                         }
-                    }else if(set7.contains(p)){
-                        for(Point point:set7){
-                            if(sudoku[point.getX()][point.getY()] instanceof  Integer)
+                    } else if (set7.contains(p)) {
+                        for (Point point : set7) {
+                            if (sudoku[point.getX()][point.getY()] instanceof Integer)
                                 elementosSet.add((Integer) sudoku[point.getX()][point.getY()]);
                         }
-                    }else if(set8.contains(p)){
-                        for(Point point:set8){
-                            if(sudoku[point.getX()][point.getY()] instanceof  Integer)
+                    } else if (set8.contains(p)) {
+                        for (Point point : set8) {
+                            if (sudoku[point.getX()][point.getY()] instanceof Integer)
                                 elementosSet.add((Integer) sudoku[point.getX()][point.getY()]);
                         }
-                    }else if(set9.contains(p)){
-                        for(Point point:set9){
-                            if(sudoku[point.getX()][point.getY()] instanceof  Integer)
+                    } else if (set9.contains(p)) {
+                        for (Point point : set9) {
+                            if (sudoku[point.getX()][point.getY()] instanceof Integer)
                                 elementosSet.add((Integer) sudoku[point.getX()][point.getY()]);
                         }
                     }
@@ -193,27 +191,37 @@ public class Sudoku {
 
     private void recorreRows() {
         for (int row = 0; row < ROWS; row++) {
+
+            Map<Integer, Point> candidatos = new HashMap<Integer, Point>();
+
             for (int column = 0; column < COLUMNS; column++) {
                 if (sudoku[row][column] instanceof ArrayList) {
                     ArrayList<Integer> elementosNodo = (ArrayList<Integer>) sudoku[row][column];
-                    if(elementosNodo.size() == 1){
-                        sudoku[row][column] = elementosNodo.get(0);
-                    }else{
-                        sudoku[row][column] = 0;
+
+                    for (Integer e: elementosNodo) {
+                        if (candidatos.containsKey(e)) {
+                            candidatos.put(e, new Point(candidatos.get(e).getX()+1, column));
+                        } else {
+                            candidatos.put(e, new Point(1, column));
+                        }
                     }
                 }
+            }
+
+            for (Map.Entry<Integer, Point> entry : candidatos.entrySet()) {
+
             }
         }
     }
 
-    private void reInit(){
+    private void reInit() {
         for (int row = 0; row < ROWS; row++) {
             for (int column = 0; column < COLUMNS; column++) {
                 if (sudoku[row][column] instanceof ArrayList) {
                     ArrayList<Integer> elementosNodo = (ArrayList<Integer>) sudoku[row][column];
-                    if(elementosNodo.size() == 1){
+                    if (elementosNodo.size() == 1) {
                         sudoku[row][column] = elementosNodo.get(0);
-                    }else{
+                    } else {
                         sudoku[row][column] = 0;
                     }
                 }
@@ -254,6 +262,5 @@ public class Sudoku {
             for (int j = 6; j < 9; j++)
                 set9.add(new Point(i, j));
         }
-        System.out.println("set 5:" + set5);
     }
 }
