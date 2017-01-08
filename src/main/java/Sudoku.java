@@ -19,15 +19,15 @@ public class Sudoku {
     HashSet<Point> set9 = new HashSet<Point>();
 
     private Object[][] sudoku = {
-            {0, 1, 8, 0, 0, 0, 7, 0, 0},
-            {0, 0, 0, 1, 5, 0, 0, 0, 0},
-            {0, 3, 0, 0, 0, 0, 0, 0, 9},
-            {2, 0, 3, 9, 0, 1, 0, 0, 0},
+            {0, 1, 8, 0, 0, 0, 7, 0, 2},
+            {0, 6, 2, 1, 5, 0, 0, 0, 8},
+            {0, 3, 4, 8, 2, 0, 0, 0, 9},
+            {2, 7, 3, 9, 0, 1, 0, 8, 0},
             {6, 8, 5, 0, 7, 2, 0, 0, 0},
-            {1, 0, 9, 0, 8, 0, 0, 0, 0},
-            {3, 0, 6, 0, 1, 0, 4, 2, 7},
-            {8, 0, 1, 0, 0, 4, 0, 0, 0},
-            {4, 0, 0, 0, 0, 0, 0, 6, 1}
+            {1, 4, 9, 0, 8, 5, 2, 7, 0},
+            {3, 9, 6, 5, 1, 8, 4, 2, 7},
+            {8, 2, 1, 7, 6, 4, 0, 0, 0},
+            {4, 5, 7, 2, 0, 0, 8, 6, 1}
     };
 
     public void run() {
@@ -65,11 +65,16 @@ public class Sudoku {
             reInit();
         }
 
+        //recorreRows();
+
     }
+
+
 
     private void showSudoku() {
         System.out.println("Star showSudoku ");
-        System.out.println("**************************************************************************************************");
+        System.out.println("*************************************************************************************" +
+                "************************************************************************************************");
 
         for (int row = 0; row < ROWS; row++) {
             for (int column = 0; column < COLUMNS; column++) {
@@ -79,7 +84,8 @@ public class Sudoku {
             System.out.println("\n");
         }
 
-        System.out.println("**************************************************************************************************");
+        System.out.println("*************************************************************************************" +
+                "************************************************************************************************");
         System.out.println("Finish showSudoku ");
     }
 
@@ -180,6 +186,21 @@ public class Sudoku {
 
                     sudoku[row][column] = elementosNodo;
 
+                }
+            }
+        }
+    }
+
+    private void recorreRows() {
+        for (int row = 0; row < ROWS; row++) {
+            for (int column = 0; column < COLUMNS; column++) {
+                if (sudoku[row][column] instanceof ArrayList) {
+                    ArrayList<Integer> elementosNodo = (ArrayList<Integer>) sudoku[row][column];
+                    if(elementosNodo.size() == 1){
+                        sudoku[row][column] = elementosNodo.get(0);
+                    }else{
+                        sudoku[row][column] = 0;
+                    }
                 }
             }
         }
